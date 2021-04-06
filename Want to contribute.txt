@@ -1,0 +1,3 @@
+In case you want to contribute with your own code or with other nice examples of plots please 
+send an email to georgygomon@hotmail.com with your github account and I will add you
+as contributor to this repository.

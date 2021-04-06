@@ -1,0 +1,82 @@
+---
+title: "Live Coding Session"
+output:
+  pdf_document:
+    fig_caption: yes
+    keep_tex: yes
+  html_document:
+    df_print: paged
+subtitle: SCR Week 06
+header-includes:
+- \usepackage{graphicx}
+- \usepackage{float}
+- \usepackage{placeins}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, fig.show = TRUE)
+library(tidyverse)
+library(gapminder)
+```
+
+<!-- show what happens when loading tidyverse! -->
+
+## The `ggplot()`
+
+```{r empty, eval = TRUE}
+p <- ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp))
+p
+```
+
+## Adding Geometric Objects
+
+In `ggplot2` we can add geometric objects via `geom_*`
+
+```{r, fig.show = TRUE}
+p + geom_point() 
+```
+
+## Axis Transformations
+
+```{r, fig.show = TRUE}
+p +
+  geom_point() +
+  scale_x_log10()
+```
+
+## Many `graphics::par` still remain...
+
+Check out `?graphics::par`
+
+```{r, fig.show = TRUE, eval = TRUE}
+p + geom_point(pch = ".", cex = 0.7, alpha = 0.8)
+```
+
+## `pch` and `cex` or `shape` and `size`?
+
+```{r, fig.show = TRUE, eval = TRUE}
+p + geom_point(shape = 21, size = 0.7, alpha = 0.8)
+```
+
+## Map data to visual parameters: `aes()`
+
+```{r, eval = TRUE}
+p + geom_point(aes(size = pop, fill = continent), shape = 21, alpha = 0.5)
+```
+
+## Facets
+
+```{r last_ggGdP, eval = FALSE}
+ggplot(gapminder, aes(x = year, y = lifeExp, col = gdpPercap)) +
+  geom_jitter(aes(size = pop)) + 
+  scale_color_continuous(low = "blue", high = "red") +
+  scale_x_log10() + 
+  stat_smooth(method = "loess", se = FALSE, col = "red", lwd = 0.5) + 
+  coord_cartesian(xlim = c(2000,2007)) +
+  facet_wrap(continent ~ .) +
+  theme(
+    legend.position = "bottom"
+  ) 
+```
+
